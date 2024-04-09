@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import alarmSound from '../assets/sounds/alarmSound.mp3'
 
 const MainTimer = () => {
   const [seconds, setSeconds] = useState(0)
@@ -22,6 +23,7 @@ const MainTimer = () => {
       // Stop the interval when the timer reaches 0 and also set the isActive state to false
       clearInterval(intervalID) 
       setIsActive(false)
+      playAlarm()
     }
 
     // Clean-up function that first cleans up the previous effect before applying the next effect
@@ -30,6 +32,11 @@ const MainTimer = () => {
 
     // When the isActive or seconds state changes, the useEffect function will run again
   }, [isActive, seconds])
+
+  const playAlarm = () => {
+    const alarm = new Audio(alarmSound)
+    alarm.play()
+  }
 
   const toggle = () => {
     if (!isActive && minutesInput) {
@@ -68,6 +75,7 @@ const MainTimer = () => {
   const displayMinutes = Math.floor(seconds / 60)
   const displaySeconds = seconds % 60
 
+  // TODO: Make this circle to its own component
   // Circle SVG Properties
   const size = 200 // Size of the SVG canvas
   const strokeWidth = 10 // Thickness of the circle stroke
@@ -94,6 +102,8 @@ const MainTimer = () => {
         />
       </svg>
 
+      {/* Display both minutes and seconds */}
+      {/* Use padStart to ensure that seconds are always displayed with two digits, prefixing a '0' when necessary */}
       <h2>{`${displayMinutes}m : ${displaySeconds.toString().padStart(2, '0')}s`}</h2>
 
       <input
@@ -104,10 +114,10 @@ const MainTimer = () => {
         // Disable input when timer is active
         disabled={isActive}
       />
+
+      {/* //TODO: Make the buttons to components */}
       <button type='button' onClick={toggle}>{isActive ? 'Pause' : 'Start'}</button>
       <button type='button' onClick={reset}>Reset</button>
-      {/* Display both minutes and seconds */}
-      {/* Use padStart to ensure that seconds are always displayed with two digits, prefixing a '0' when necessary */}
     </form>
   )
 }
