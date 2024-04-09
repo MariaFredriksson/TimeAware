@@ -107,6 +107,9 @@ const MainTimer = () => {
           transform={`rotate(-90 ${size / 2} ${size / 2})`}
         />
       </svg>
+
+      {/* Add a p tag just for testing */}
+      <p>Hej hej test!</p>
     </form>
   )
 }
