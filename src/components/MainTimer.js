@@ -34,13 +34,6 @@ const MainTimer = () => {
       setSeconds(inputSeconds);
     }
     setIsActive(!isActive)
-
-    // if (seconds > 0) {
-    //   setIsActive(!isActive)
-    // } else {
-    //   // Prevent the timer from starting if seconds are 0
-    //   setIsActive(false)
-    // }
   }
 
   const reset = () => {
@@ -56,12 +49,20 @@ const MainTimer = () => {
     }
   }
 
+  const handleSubmit = (e) => {
+    // Prevent the default form submission behavior, like refreshing the page
+    e.preventDefault()
+
+    toggle()
+  }
+
   // Calculate minutes and seconds for display
   const displayMinutes = Math.floor(seconds / 60)
   const displaySeconds = seconds % 60
 
   return (
-    <div>
+    // If the user presses Enter, the form will submit and the timer will start
+    <form onSubmit={handleSubmit}>
       <input
         type="number"
         value={minutesInput}
@@ -70,12 +71,12 @@ const MainTimer = () => {
         // Disable input when timer is active
         disabled={isActive}
       />
-      <button onClick={toggle}>{isActive ? 'Pause' : 'Start'}</button>
-      <button onClick={reset}>Reset</button>
+      <button type='button' onClick={toggle}>{isActive ? 'Pause' : 'Start'}</button>
+      <button type='button' onClick={reset}>Reset</button>
       {/* Display both minutes and seconds */}
       {/* Use padStart to ensure that seconds are always displayed with two digits, prefixing a '0' when necessary */}
       <h2>{`${displayMinutes}m : ${displaySeconds.toString().padStart(2, '0')}s`}</h2>
-    </div>
+    </form>
   )
 }
 
