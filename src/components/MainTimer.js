@@ -41,15 +41,22 @@ const MainTimer = () => {
   }
 
   const handleChange = (e) => {
-    setSeconds(e.target.value)
+    // Convert minutes to seconds for internal storage
+    setSeconds(e.target.value * 60)
   }
+
+  // Calculate minutes and seconds for display
+  const displayMinutes = Math.floor(seconds / 60)
+  const displaySeconds = seconds % 60
 
   return (
     <div>
-      <input type="number" value={seconds} onChange={handleChange} />
+      <input type="number" value={displayMinutes} onChange={handleChange} />
       <button onClick={toggle}>{isActive ? 'Pause' : 'Start'}</button>
       <button onClick={reset}>Reset</button>
-      <h2>{seconds}s</h2>
+      {/* Display both minutes and seconds */}
+      {/* Use padStart to ensure that seconds are always displayed with two digits, prefixing a '0' when necessary */}
+      <h2>{`${displayMinutes}m : ${displaySeconds.toString().padStart(2, '0')}s`}</h2>
     </div>
   )
 }
