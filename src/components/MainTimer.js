@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 
 const MainTimer = () => {
   const [seconds, setSeconds] = useState(0)
+  const [minutesInput, setMinutesInput] = useState('')
   const [isActive, setIsActive] = useState(false)
 
   useEffect(() => {
@@ -27,22 +28,32 @@ const MainTimer = () => {
   }, [isActive, seconds])
 
   const toggle = () => {
-    if (seconds > 0) {
-      setIsActive(!isActive)
-    } else {
-      // Prevent the timer from starting if seconds are 0
-      setIsActive(false)
+    if (!isActive && minutesInput) {
+      // Convert and set the timer only if it's not already active and there's input
+      const inputSeconds = parseInt(minutesInput, 10) * 60;
+      setSeconds(inputSeconds);
     }
+    setIsActive(!isActive)
+
+    // if (seconds > 0) {
+    //   setIsActive(!isActive)
+    // } else {
+    //   // Prevent the timer from starting if seconds are 0
+    //   setIsActive(false)
+    // }
   }
 
   const reset = () => {
     setSeconds(0)
+    setMinutesInput('')
     setIsActive(false)
   }
 
   const handleChange = (e) => {
-    // Convert minutes to seconds for internal storage
-    setSeconds(e.target.value * 60)
+    // Allow change only if timer is not active
+    if (!isActive) {
+      setMinutesInput(e.target.value);
+    }
   }
 
   // Calculate minutes and seconds for display
@@ -51,7 +62,14 @@ const MainTimer = () => {
 
   return (
     <div>
-      <input type="number" value={displayMinutes} onChange={handleChange} />
+      <input
+        type="number"
+        value={minutesInput}
+        onChange={handleChange}
+        placeholder="Minutes"
+        // Disable input when timer is active
+        disabled={isActive}
+      />
       <button onClick={toggle}>{isActive ? 'Pause' : 'Start'}</button>
       <button onClick={reset}>Reset</button>
       {/* Display both minutes and seconds */}
