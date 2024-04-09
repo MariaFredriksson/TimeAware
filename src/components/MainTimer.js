@@ -79,20 +79,6 @@ const MainTimer = () => {
   return (
     // If the user presses Enter, the form will submit and the timer will start
     <form onSubmit={handleSubmit}>
-      <input
-        type="number"
-        value={minutesInput}
-        onChange={handleChange}
-        placeholder="Minutes"
-        // Disable input when timer is active
-        disabled={isActive}
-      />
-      <button type='button' onClick={toggle}>{isActive ? 'Pause' : 'Start'}</button>
-      <button type='button' onClick={reset}>Reset</button>
-      {/* Display both minutes and seconds */}
-      {/* Use padStart to ensure that seconds are always displayed with two digits, prefixing a '0' when necessary */}
-      <h2>{`${displayMinutes}m : ${displaySeconds.toString().padStart(2, '0')}s`}</h2>
-
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
         <circle
           stroke="blue"
@@ -108,8 +94,20 @@ const MainTimer = () => {
         />
       </svg>
 
-      {/* Add a p tag just for testing */}
-      <p>Hej hej test!</p>
+      <h2>{`${displayMinutes}m : ${displaySeconds.toString().padStart(2, '0')}s`}</h2>
+
+      <input
+        type="number"
+        value={minutesInput}
+        onChange={handleChange}
+        placeholder="Minutes"
+        // Disable input when timer is active
+        disabled={isActive}
+      />
+      <button type='button' onClick={toggle}>{isActive ? 'Pause' : 'Start'}</button>
+      <button type='button' onClick={reset}>Reset</button>
+      {/* Display both minutes and seconds */}
+      {/* Use padStart to ensure that seconds are always displayed with two digits, prefixing a '0' when necessary */}
     </form>
   )
 }
