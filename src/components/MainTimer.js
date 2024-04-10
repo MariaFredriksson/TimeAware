@@ -33,6 +33,7 @@ const MainTimer = () => {
     // When the isActive or seconds state changes, the useEffect function will run again
   }, [isActive, seconds])
 
+  // TODO: Make the alarm loop until the user stops it
   const playAlarm = () => {
     const alarm = new Audio(alarmSound)
     alarm.play()
