@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import alarmSound from '../assets/sounds/alarmSound.mp3'
 import CountdownCircle from './CountdownCircle.js'
+import SubTimer from './SubTimer.js'
 
 const MainTimer = () => {
   const [seconds, setSeconds] = useState(0)
@@ -91,7 +92,7 @@ const MainTimer = () => {
           type="number"
           value={minutesInput}
           onChange={handleChange}
-          placeholder="Minutes"
+          placeholder="Main-timer minutes"
           // Disable input when timer is active
           disabled={isActive}
         />
@@ -99,8 +100,9 @@ const MainTimer = () => {
         {/* //TODO: Make the buttons to components */}
         <button type='button' onClick={toggle}>{isActive ? 'Pause' : 'Start'}</button>
         <button type='button' onClick={reset}>Reset</button>
-
       </form>
+
+      <SubTimer />
     </div>
   )
 }
