@@ -86,8 +86,7 @@ const MainTimer = () => {
     ((totalSeconds - seconds) / totalSeconds) * circumference // How much of the circle is unfilled
 
   return (
-    // If the user presses Enter, the form will submit and the timer will start
-    <form onSubmit={handleSubmit}>
+    <div>
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
         <circle
           stroke="blue"
@@ -102,24 +101,28 @@ const MainTimer = () => {
           transform={`rotate(-90 ${size / 2} ${size / 2})`}
         />
       </svg>
-
+      
       {/* Display both minutes and seconds */}
       {/* Use padStart to ensure that seconds are always displayed with two digits, prefixing a '0' when necessary */}
       <h2>{`${displayMinutes}m : ${displaySeconds.toString().padStart(2, '0')}s`}</h2>
 
-      <input
-        type="number"
-        value={minutesInput}
-        onChange={handleChange}
-        placeholder="Minutes"
-        // Disable input when timer is active
-        disabled={isActive}
-      />
+      {/* If the user presses Enter, the form will submit and the timer will start */}
+      <form onSubmit={handleSubmit}>
+        <input
+          type="number"
+          value={minutesInput}
+          onChange={handleChange}
+          placeholder="Minutes"
+          // Disable input when timer is active
+          disabled={isActive}
+        />
 
-      {/* //TODO: Make the buttons to components */}
-      <button type='button' onClick={toggle}>{isActive ? 'Pause' : 'Start'}</button>
-      <button type='button' onClick={reset}>Reset</button>
-    </form>
+        {/* //TODO: Make the buttons to components */}
+        <button type='button' onClick={toggle}>{isActive ? 'Pause' : 'Start'}</button>
+        <button type='button' onClick={reset}>Reset</button>
+
+      </form>
+    </div>
   )
 }
 
