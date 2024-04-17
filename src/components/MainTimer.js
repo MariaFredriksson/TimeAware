@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import alarmSound from '../assets/sounds/alarmSound.mp3'
+import CountdownCircle from './CountdownCircle.js'
 
 const MainTimer = () => {
   const [seconds, setSeconds] = useState(0)
@@ -76,32 +77,10 @@ const MainTimer = () => {
   const displayMinutes = Math.floor(seconds / 60)
   const displaySeconds = seconds % 60
 
-  // TODO: Make this circle to its own component
-  // Circle SVG Properties
-  const size = 200 // Size of the SVG canvas
-  const strokeWidth = 10 // Thickness of the circle stroke
-  const radius = (size - strokeWidth) / 2 // Radius of the circle
-  const circumference = radius * 2 * Math.PI // Circumference of the circle
-  const strokeDashoffset =
-    ((totalSeconds - seconds) / totalSeconds) * circumference // How much of the circle is unfilled
-
   return (
     <div>
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-        <circle
-          stroke="blue"
-          fill="none"
-          strokeWidth={strokeWidth}
-          strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
-          r={radius}
-          cx={size / 2}
-          cy={size / 2}
-          // Rotate the circle to start from the top, and rotate it around its center
-          transform={`rotate(-90 ${size / 2} ${size / 2})`}
-        />
-      </svg>
-      
+      <CountdownCircle size={200} strokeWidth={10} seconds={seconds} totalSeconds={totalSeconds} />
+
       {/* Display both minutes and seconds */}
       {/* Use padStart to ensure that seconds are always displayed with two digits, prefixing a '0' when necessary */}
       <h2>{`${displayMinutes}m : ${displaySeconds.toString().padStart(2, '0')}s`}</h2>
