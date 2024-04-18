@@ -23,7 +23,7 @@ const MainTimer = ({ name }) => {
       intervalID = setInterval(() => {
         setSeconds((seconds) => seconds - 1)
       }, 1000)
-    } else if (seconds <= 0) {
+    } else if (isActive && seconds <= 0) {
       // Stop the interval when the timer reaches 0 and also set the isActive state to false
       clearInterval(intervalID) 
       setIsActive(false)
@@ -56,8 +56,10 @@ const MainTimer = ({ name }) => {
         // Set total seconds for calculating the circle progress
         setTotalSeconds(inputSeconds)
       }
+      setIsActive(true)
+    } else if (isActive) {
+      setIsActive(false)
     }
-    setIsActive(!isActive)
   }
 
   const setTimerToSpecificTime = () => {
@@ -120,6 +122,7 @@ const MainTimer = ({ name }) => {
       {/* Use padStart to ensure that seconds are always displayed with two digits, prefixing a '0' when necessary */}
       <h2>{`${displayMinutes}m : ${displaySeconds.toString().padStart(2, '0')}s`}</h2>
 
+      {/* //^^ Can't change name by pressing enter, but is it important? */}
       <input type="text" value={timerName} onChange={handleNameChange} placeholder="Timer Name" />
 
       {/* If the user presses Enter, the form will submit and the timer will start */}
