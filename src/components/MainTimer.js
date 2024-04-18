@@ -107,7 +107,8 @@ const MainTimer = () => {
 
   return (
     <div>
-      <CountdownCircle size={200} strokeWidth={10} seconds={seconds} totalSeconds={totalSeconds} />
+      {/* Only show the countdown circle when the timer is active */}
+      {isActive && <CountdownCircle size={200} strokeWidth={10} seconds={seconds} totalSeconds={totalSeconds} />}
 
       {/* Display both minutes and seconds */}
       {/* Use padStart to ensure that seconds are always displayed with two digits, prefixing a '0' when necessary */}
