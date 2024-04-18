@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import alarmSound from '../assets/sounds/alarmSound.mp3'
 import CountdownCircle from './CountdownCircle.js'
 
-const MainTimer = () => {
+const MainTimer = ({ name }) => {
   const [seconds, setSeconds] = useState(0)
 
   // Store total seconds for the full timer
@@ -11,6 +11,8 @@ const MainTimer = () => {
   const [minutesInput, setMinutesInput] = useState('')
   const [timeInput, setTimeInput] = useState('')
   const [isActive, setIsActive] = useState(false)
+
+  const [timerName, setTimerName] = useState(name)
 
   useEffect(() => {
     // Create a variable to store the interval ID, which will be used to clear the interval later
@@ -101,6 +103,10 @@ const MainTimer = () => {
     toggle()
   }
 
+  const handleNameChange = (e) => {
+    setTimerName(e.target.value);
+  }
+
   // Calculate minutes and seconds for display
   const displayMinutes = Math.floor(seconds / 60)
   const displaySeconds = seconds % 60
@@ -113,6 +119,8 @@ const MainTimer = () => {
       {/* Display both minutes and seconds */}
       {/* Use padStart to ensure that seconds are always displayed with two digits, prefixing a '0' when necessary */}
       <h2>{`${displayMinutes}m : ${displaySeconds.toString().padStart(2, '0')}s`}</h2>
+
+      <input type="text" value={timerName} onChange={handleNameChange} placeholder="Timer Name" />
 
       {/* If the user presses Enter, the form will submit and the timer will start */}
       <form onSubmit={handleSubmit}>
