@@ -40,6 +40,7 @@ const MainTimer = () => {
     alarm.play()
   }
 
+  // TODO: Maybe do something else instead of the pause button
   const toggle = () => {
     if (!isActive && minutesInput) {
       // Convert and set the timer only if it's not already active and there's input
