@@ -12,6 +12,9 @@ const MainTimer = () => {
   const [minutesInput, setMinutesInput] = useState('')
   const [isActive, setIsActive] = useState(false)
 
+  const [subTimerSeconds, setSubTimerSeconds] = useState(0)
+  const [subTimerActive, setSubTimerActive] = useState(false)
+
   useEffect(() => {
     // Create a variable to store the interval ID, which will be used to clear the interval later
     // and hence stop the timer
@@ -20,6 +23,9 @@ const MainTimer = () => {
     if (isActive && seconds > 0) {
       intervalID = setInterval(() => {
         setSeconds((seconds) => seconds - 1)
+        if (seconds === subTimerSeconds) {
+          setSubTimerActive(true)
+        }
       }, 1000)
     } else if (seconds <= 0) {
       // Stop the interval when the timer reaches 0 and also set the isActive state to false
@@ -33,7 +39,7 @@ const MainTimer = () => {
     return () => clearInterval(intervalID)
 
     // When the isActive or seconds state changes, the useEffect function will run again
-  }, [isActive, seconds])
+  }, [isActive, seconds, subTimerSeconds])
 
   // TODO: Make the alarm loop until the user stops it
   const playAlarm = () => {
@@ -74,6 +80,15 @@ const MainTimer = () => {
     toggle()
   }
 
+  // Handle when sub-timer should start
+  // const handleSubTimerStart = () => {
+  //   setSubTimerActive(false)
+  // }
+
+  const handleAddedSubTimer = (subTimerSeconds) => {
+    setSubTimerSeconds(subTimerSeconds)
+  }
+
   // Calculate minutes and seconds for display
   const displayMinutes = Math.floor(seconds / 60)
   const displaySeconds = seconds % 60
@@ -102,7 +117,7 @@ const MainTimer = () => {
         <button type='button' onClick={reset}>Reset</button>
       </form>
 
-      <SubTimer />
+      <SubTimer isActive={subTimerActive} addedSubTimer={handleAddedSubTimer} />
     </div>
   )
 }
