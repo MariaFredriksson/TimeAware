@@ -9,6 +9,7 @@ const MainTimer = () => {
   const [totalSeconds, setTotalSeconds] = useState(0)
 
   const [minutesInput, setMinutesInput] = useState('')
+  const [timeInput, setTimeInput] = useState('')
   const [isActive, setIsActive] = useState(false)
 
   useEffect(() => {
@@ -42,28 +43,54 @@ const MainTimer = () => {
 
   // TODO: Maybe do something else instead of the pause button
   const toggle = () => {
-    if (!isActive && minutesInput) {
-      // Convert and set the timer only if it's not already active and there's input
-      const inputSeconds = parseInt(minutesInput, 10) * 60
-      setSeconds(inputSeconds)
-
-      // Set total seconds for calculating the circle progress
-      setTotalSeconds(inputSeconds)
+    if (!isActive && (minutesInput || timeInput)) {
+      if (timeInput) {
+        setTimerToSpecificTime()
+      } else {
+        // Convert and set the timer only if it's not already active and there's input
+        const inputSeconds = parseInt(minutesInput, 10) * 60
+        setSeconds(inputSeconds)
+  
+        // Set total seconds for calculating the circle progress
+        setTotalSeconds(inputSeconds)
+      }
     }
     setIsActive(!isActive)
+  }
+
+  const setTimerToSpecificTime = () => {
+    const targetTime = new Date()
+    const [hours, minutes] = timeInput.split(':').map(Number)
+    targetTime.setHours(hours, minutes, 0)
+    
+    const currentTime = new Date()
+    let difference = (targetTime - currentTime) / 1000 // difference in seconds
+
+    if (difference < 0) {
+      // If the target time is in the past, set it for the next day
+      difference += 86400 // Add 24 hours worth of seconds
+    }
+
+    setSeconds(difference)
+    setTotalSeconds(difference)
   }
 
   const reset = () => {
     setSeconds(0)
     setTotalSeconds(0)
     setMinutesInput('')
+    setTimeInput('')
     setIsActive(false)
   }
 
   const handleChange = (e) => {
     // Allow change only if timer is not active
     if (!isActive) {
-      setMinutesInput(e.target.value)
+      if (e.target.name === 'minutesInput') {
+        setMinutesInput(e.target.value)
+      } else if (e.target.name === 'timeInput') {
+        setTimeInput(e.target.value)
+      }
     }
   }
 
@@ -88,12 +115,24 @@ const MainTimer = () => {
 
       {/* If the user presses Enter, the form will submit and the timer will start */}
       <form onSubmit={handleSubmit}>
+
         <input
           type="number"
+          name="minutesInput"
           value={minutesInput}
           onChange={handleChange}
           placeholder="Minutes"
           // Disable input when timer is active
+          disabled={isActive}
+        />
+
+        {/* //^^ Can't add timer by pressing enter, but is that important? */}
+        <input
+          type="time"
+          name="timeInput"
+          value={timeInput}
+          onChange={handleChange}
+          placeholder="HH:MM"
           disabled={isActive}
         />
 
@@ -102,7 +141,6 @@ const MainTimer = () => {
         <button type='button' onClick={reset}>Reset</button>
 
       </form>
-      <p>Test tag</p>
     </div>
   )
 }
