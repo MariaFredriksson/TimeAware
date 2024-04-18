@@ -102,6 +102,7 @@ const MainTimer = () => {
         <button type='button' onClick={reset}>Reset</button>
 
       </form>
+      <p>Test tag</p>
     </div>
   )
 }
