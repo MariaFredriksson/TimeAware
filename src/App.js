@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import MainTimer from './components/MainTimer'
 import { v4 as uuidv4 } from 'uuid'
@@ -6,12 +6,24 @@ import { v4 as uuidv4 } from 'uuid'
 function App() {
   const [timers, setTimers] = useState([])
 
+  // Initialize with the first timer when the component mounts, so there is always at least one timer
+  useEffect(() => {
+    addInitialTimer()
+  }, [])
+
+  const addInitialTimer = () => {
+    const initialTimer = {
+      id: uuidv4(),
+      name: 'Timer 1'
+    }
+    setTimers([initialTimer])
+  }
+
   const addTimer = () => {
     const newTimer = {
       id: uuidv4(),
-      // Timer name is +2 because the first timer is always shown, and it is not in the array
-      name: `Timer ${timers.length + 2}`
-    };
+      name: `Timer ${timers.length + 1}`
+    }
     setTimers([...timers, newTimer])
   }
 
@@ -21,18 +33,12 @@ function App() {
 
   return (
     <div className="App color-1">
-      {/* // TODO: Make it possible to delete this timer also */}
-      {/* Always show the first timer */}
-      <MainTimer name='Timer 1'/>
-
-      {/* Then show additional timers, if there are any */}
       {timers.map(timer => (
         <div key={timer.id}>
           <MainTimer name={timer.name} />
           <button onClick={() => deleteTimer(timer.id)} className='color-4 color-2-text btn m-3'>Delete</button>
         </div>
       ))}
-      <br />
       <button onClick={addTimer} className='color-4 color-2-text btn m-3'>Add Timer</button>
     </div>
   )
