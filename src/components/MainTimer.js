@@ -114,19 +114,19 @@ const MainTimer = ({ name }) => {
   const displaySeconds = seconds % 60
 
   return (
-    <div>
+    <div className='mt-5'>
       {/* Only show the countdown circle when the timer is active */}
-      {isActive && <CountdownCircle size={200} strokeWidth={10} seconds={seconds} totalSeconds={totalSeconds} />}
+      {(minutesInput || timeInput) && <CountdownCircle size={200} strokeWidth={10} seconds={seconds} totalSeconds={totalSeconds} />}
 
       {/* Display both minutes and seconds */}
       {/* Use padStart to ensure that seconds are always displayed with two digits, prefixing a '0' when necessary */}
-      <h2 className='color-3-text m-3'>{`${displayMinutes}m : ${displaySeconds.toString().padStart(2, '0')}s`}</h2>
+      <h2 className='color-2-text m-3'>{`${displayMinutes}m : ${displaySeconds.toString().padStart(2, '0')}s`}</h2>
 
       {/* //^^ Can't change name by pressing enter, but is it important? */}
-      <input type="text" value={timerName} onChange={handleNameChange} placeholder="Timer Name" className='color-4 form-control mb-3' />
+      <input type="text" value={timerName} onChange={handleNameChange} placeholder="Timer Name" className='form-control mb-3' />
 
       {/* If the user presses Enter, the form will submit and the timer will start */}
-      <form onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}>
 
         <input
           type="number"
@@ -136,24 +136,58 @@ const MainTimer = ({ name }) => {
           placeholder="Minutes"
           // Disable input when timer is active
           disabled={isActive}
-          className='color-4 form-control mb-3'
-        />
+          className='form-control mb-3'
+        /> */}
 
         {/* //^^ Can't add timer by pressing enter, but is that important? */}
-        <input
+        {/* <input
           type="time"
           name="timeInput"
           value={timeInput}
           onChange={handleChange}
           placeholder="HH:MM"
           disabled={isActive}
-          className='color-4 form-control mb-3'
-        />
+          className='form-control mb-3'
+        /> */}
 
         {/* //TODO: Make the buttons to components */}
-        <button type='button' onClick={toggle} className='color-2 btn mx-3'>{isActive ? 'Pause' : 'Start'}</button>
-        <button type='button' onClick={reset} className='color-3 btn mx-3'>Reset</button>
+        {/* <button type='button' onClick={toggle} className='color-2 btn mx-3'>{isActive ? 'Pause' : 'Start'}</button>
+        <button type='button' onClick={reset} className='color-4 color-2-text btn mx-3'>Reset</button>
 
+      </form> */}
+
+      <form onSubmit={handleSubmit} className="container">
+        <div className="row">
+          <div className="w-50">
+            <input
+              type="number"
+              name="minutesInput"
+              value={minutesInput}
+              onChange={handleChange}
+              placeholder="Minutes"
+              disabled={isActive}
+              className='form-control mb-3'
+            />
+          </div>
+          <div className="w-50">
+            <input
+              type="time"
+              name="timeInput"
+              value={timeInput}
+              onChange={handleChange}
+              placeholder="HH:MM"
+              disabled={isActive}
+              className='form-control mb-3'
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            {/* //TODO: Make the buttons to components */}
+            <button type='button' onClick={toggle} className='color-2 btn mx-3'>{isActive ? 'Pause' : 'Start'}</button>
+            <button type='button' onClick={reset} className='color-4 color-2-text btn mx-3'>Reset</button>
+          </div>
+        </div>
       </form>
     </div>
   )

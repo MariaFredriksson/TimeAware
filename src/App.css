@@ -8,21 +8,28 @@
 }
 
 .color-1 {
-  background-color: #008DDA;
+  /* background-color: #008DDA; */
+  background-color: #3AAFA9;
 }
 
 .color-2 {
-  background-color: #41C9E2;
+  /* background-color: #41C9E2; */
+  background-color: #DEF2F1;
+}
+
+.color-2-text {
+  color: #DEF2F1;
 }
 
 .color-3 {
-  background-color: #ACE2E1;
+  /* background-color: #ACE2E1; */
+  background-color: #17252A;
 }
 
 .color-3-text {
-  color: #ACE2E1;
+  color: #17252A;
 }
 
 .color-4 {
-  background-color: #F7EEDD;
+  background-color: #2B7A78;
 }

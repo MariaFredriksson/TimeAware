@@ -29,11 +29,11 @@ function App() {
       {timers.map(timer => (
         <div key={timer.id}>
           <MainTimer name={timer.name} />
-          <button onClick={() => deleteTimer(timer.id)}>Delete</button>
+          <button onClick={() => deleteTimer(timer.id)} className='color-4 color-2-text btn m-3'>Delete</button>
         </div>
       ))}
       <br />
-      <button onClick={addTimer} className='color-3 btn'>Add Timer</button>
+      <button onClick={addTimer} className='color-4 color-2-text btn m-3'>Add Timer</button>
     </div>
   )
 }
