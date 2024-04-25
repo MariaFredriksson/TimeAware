@@ -5,6 +5,24 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: aquamarine;
 }
 
+.color-1 {
+  background-color: #008DDA;
+}
+
+.color-2 {
+  background-color: #41C9E2;
+}
+
+.color-3 {
+  background-color: #ACE2E1;
+}
+
+.color-3-text {
+  color: #ACE2E1;
+}
+
+.color-4 {
+  background-color: #F7EEDD;
+}

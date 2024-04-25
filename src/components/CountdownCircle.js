@@ -6,10 +6,12 @@ const CountdownCircle = ({ size, strokeWidth, seconds, totalSeconds }) => {
   // How much of the circle is unfilled
   const strokeDashoffset = ((totalSeconds - seconds) / totalSeconds) * circumference
 
+  //^^ Can I make the stroke color into the color of the class color-2?
+
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
       <circle
-        stroke="blue"
+        stroke="#41C9E2"
         fill="none"
         strokeWidth={strokeWidth}
         strokeDasharray={circumference}
@@ -19,6 +21,7 @@ const CountdownCircle = ({ size, strokeWidth, seconds, totalSeconds }) => {
         cy={size / 2}
         // Rotate the circle to start from the top, and rotate it around its center
         transform={`rotate(-90 ${size / 2} ${size / 2})`}
+        className="color-2"
       />
     </svg>
   )

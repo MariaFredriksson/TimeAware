@@ -20,7 +20,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App color-1">
       {/* // TODO: Make it possible to delete this timer also */}
       {/* Always show the first timer */}
       <MainTimer name='Timer 1'/>
@@ -33,7 +33,7 @@ function App() {
         </div>
       ))}
       <br />
-      <button onClick={addTimer}>Add Timer</button>
+      <button onClick={addTimer} className='color-3 btn'>Add Timer</button>
     </div>
   )
 }

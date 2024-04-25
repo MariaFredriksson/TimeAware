@@ -120,10 +120,10 @@ const MainTimer = ({ name }) => {
 
       {/* Display both minutes and seconds */}
       {/* Use padStart to ensure that seconds are always displayed with two digits, prefixing a '0' when necessary */}
-      <h2>{`${displayMinutes}m : ${displaySeconds.toString().padStart(2, '0')}s`}</h2>
+      <h2 className='color-3-text m-3'>{`${displayMinutes}m : ${displaySeconds.toString().padStart(2, '0')}s`}</h2>
 
       {/* //^^ Can't change name by pressing enter, but is it important? */}
-      <input type="text" value={timerName} onChange={handleNameChange} placeholder="Timer Name" />
+      <input type="text" value={timerName} onChange={handleNameChange} placeholder="Timer Name" className='color-4 form-control mb-3' />
 
       {/* If the user presses Enter, the form will submit and the timer will start */}
       <form onSubmit={handleSubmit}>
@@ -136,6 +136,7 @@ const MainTimer = ({ name }) => {
           placeholder="Minutes"
           // Disable input when timer is active
           disabled={isActive}
+          className='color-4 form-control mb-3'
         />
 
         {/* //^^ Can't add timer by pressing enter, but is that important? */}
@@ -146,11 +147,12 @@ const MainTimer = ({ name }) => {
           onChange={handleChange}
           placeholder="HH:MM"
           disabled={isActive}
+          className='color-4 form-control mb-3'
         />
 
         {/* //TODO: Make the buttons to components */}
-        <button type='button' onClick={toggle}>{isActive ? 'Pause' : 'Start'}</button>
-        <button type='button' onClick={reset}>Reset</button>
+        <button type='button' onClick={toggle} className='color-2 btn mx-3'>{isActive ? 'Pause' : 'Start'}</button>
+        <button type='button' onClick={reset} className='color-3 btn mx-3'>Reset</button>
 
       </form>
     </div>
