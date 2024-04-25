@@ -1,6 +1,21 @@
 import { useState, useEffect } from 'react'
+import Modal from 'react-modal'
 import alarmSound from '../assets/sounds/alarmSound.mp3'
 import CountdownCircle from './CountdownCircle.js'
+
+const customModalStyle = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+}
+
+// Bind the modal to the root element
+Modal.setAppElement('#root')
 
 const MainTimer = ({ name }) => {
   const [seconds, setSeconds] = useState(0)
@@ -11,8 +26,8 @@ const MainTimer = ({ name }) => {
   const [minutesInput, setMinutesInput] = useState('')
   const [timeInput, setTimeInput] = useState('')
   const [isActive, setIsActive] = useState(false)
-
   const [timerName, setTimerName] = useState(name)
+  const [modalIsOpen, setModalIsOpen] = useState(false)
 
   useEffect(() => {
     // Create a variable to store the interval ID, which will be used to clear the interval later
@@ -41,6 +56,7 @@ const MainTimer = ({ name }) => {
   const playAlarm = () => {
     const alarm = new Audio(alarmSound)
     alarm.play()
+    setModalIsOpen(true)
   }
 
   // TODO: Maybe do something else instead of the pause button
@@ -106,7 +122,18 @@ const MainTimer = ({ name }) => {
   }
 
   const handleNameChange = (e) => {
-    setTimerName(e.target.value);
+    setTimerName(e.target.value)
+  }
+
+  const handleSnooze = () => {
+    setSeconds(300) // Add 5 minutes
+    setIsActive(true)
+    setModalIsOpen(false)
+  }
+
+  const handleClose = () => {
+    setIsActive(false)
+    setModalIsOpen(false)
   }
 
   // Calculate minutes and seconds for display
@@ -165,6 +192,19 @@ const MainTimer = ({ name }) => {
           </div>
         </div>
       </form>
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={handleClose}
+        contentLabel="Timer Alert"
+        // style={customModalStyle}
+        className="Modal"
+        overlayClassName="Overlay"
+      >
+        <h2>Time's up for {name}</h2>
+        <button onClick={handleSnooze}>Snooze 5 Minutes</button>
+        <button onClick={handleClose}>Stop Timer</button>
+      </Modal>
     </div>
   )
 }
