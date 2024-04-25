@@ -123,7 +123,7 @@ const MainTimer = ({ name }) => {
       <h2 className='color-2-text m-3'>{`${displayMinutes}m : ${displaySeconds.toString().padStart(2, '0')}s`}</h2>
 
       {/* //^^ Can't change name by pressing enter, but is it important? */}
-      <input type="text" value={timerName} onChange={handleNameChange} placeholder="Timer Name" className='form-control mb-3' />
+      <input type="text" value={timerName} onChange={handleNameChange} placeholder="Name of the timer" className='form-control mb-3' />
 
       {/* If the user presses Enter, the form will submit and the timer will start */}
       <form onSubmit={handleSubmit} className="container">

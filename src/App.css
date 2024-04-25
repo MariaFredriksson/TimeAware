@@ -1,15 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 .App {
   text-align: center;
   min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr; /* navbar height and remaining space */
+}
+
+nav {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.app-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
 }
 
 .color-1 {
   /* background-color: #008DDA; */
   background-color: #3AAFA9 !important;
+}
+
+.color-1-text {
+  color: #3AAFA9 !important;
 }
 
 .color-2 {

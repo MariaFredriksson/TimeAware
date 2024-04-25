@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import MainTimer from './components/MainTimer'
+import Navbar from './components/Navbar'
 import { v4 as uuidv4 } from 'uuid'
 
 function App() {
@@ -33,13 +34,16 @@ function App() {
 
   return (
     <div className="App color-1">
-      {timers.map(timer => (
-        <div key={timer.id} className='border rounded-4 p-3 mt-4'>
-          <MainTimer name={timer.name} />
-          <button onClick={() => deleteTimer(timer.id)} className='color-4 color-2-text btn m-3'>Delete</button>
-        </div>
-      ))}
-      <button onClick={addTimer} className='color-4 color-2-text btn my-5'>Add Timer</button>
+      <Navbar />
+      <div className='app-area'>
+        {timers.map(timer => (
+          <div key={timer.id} className='border rounded-4 p-3 mx-2 mt-4'>
+            <MainTimer name={timer.name} />
+            <button onClick={() => deleteTimer(timer.id)} className='color-4 color-2-text btn m-3'>Delete</button>
+          </div>
+        ))}
+        <button onClick={addTimer} className='color-4 color-2-text btn my-5'>Add Timer</button>
+      </div>
     </div>
   )
 }
