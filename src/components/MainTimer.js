@@ -137,7 +137,8 @@ const MainTimer = ({ name }) => {
               onChange={handleChange}
               placeholder="Minutes"
               disabled={isActive}
-              className='form-control mb-3'
+              // If the timer is active, hence the input field is disabled, change the color of the input field
+              className={`form-control mb-3 ${isActive ? 'color-4' : ''}`}
             />
           </div>
 
@@ -150,7 +151,8 @@ const MainTimer = ({ name }) => {
               onChange={handleChange}
               placeholder="HH:MM"
               disabled={isActive}
-              className='form-control mb-3'
+              // If the timer is active, hence the input field is disabled, change the color of the input field
+              className={`form-control mb-3 ${isActive ? 'color-4' : ''}`} 
             />
           </div>
 
