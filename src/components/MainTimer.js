@@ -114,7 +114,7 @@ const MainTimer = ({ name }) => {
   const displaySeconds = seconds % 60
 
   return (
-    <div className='mt-5'>
+    <div className='mt-4'>
       {/* Only show the countdown circle when the timer is active */}
       {(minutesInput || timeInput) && <CountdownCircle size={200} strokeWidth={10} seconds={seconds} totalSeconds={totalSeconds} />}
 
@@ -126,38 +126,9 @@ const MainTimer = ({ name }) => {
       <input type="text" value={timerName} onChange={handleNameChange} placeholder="Timer Name" className='form-control mb-3' />
 
       {/* If the user presses Enter, the form will submit and the timer will start */}
-      {/* <form onSubmit={handleSubmit}>
-
-        <input
-          type="number"
-          name="minutesInput"
-          value={minutesInput}
-          onChange={handleChange}
-          placeholder="Minutes"
-          // Disable input when timer is active
-          disabled={isActive}
-          className='form-control mb-3'
-        /> */}
-
-        {/* //^^ Can't add timer by pressing enter, but is that important? */}
-        {/* <input
-          type="time"
-          name="timeInput"
-          value={timeInput}
-          onChange={handleChange}
-          placeholder="HH:MM"
-          disabled={isActive}
-          className='form-control mb-3'
-        /> */}
-
-        {/* //TODO: Make the buttons to components */}
-        {/* <button type='button' onClick={toggle} className='color-2 btn mx-3'>{isActive ? 'Pause' : 'Start'}</button>
-        <button type='button' onClick={reset} className='color-4 color-2-text btn mx-3'>Reset</button>
-
-      </form> */}
-
       <form onSubmit={handleSubmit} className="container">
         <div className="row">
+
           <div className="w-50">
             <input
               type="number"
@@ -169,6 +140,8 @@ const MainTimer = ({ name }) => {
               className='form-control mb-3'
             />
           </div>
+
+        {/* //^^ Can't add timer by pressing enter, but is that important? */}
           <div className="w-50">
             <input
               type="time"
@@ -180,6 +153,7 @@ const MainTimer = ({ name }) => {
               className='form-control mb-3'
             />
           </div>
+
         </div>
         <div className="row">
           <div className="col-md-12">

@@ -34,12 +34,12 @@ function App() {
   return (
     <div className="App color-1">
       {timers.map(timer => (
-        <div key={timer.id}>
+        <div key={timer.id} className='border rounded-4 p-3 mt-4'>
           <MainTimer name={timer.name} />
           <button onClick={() => deleteTimer(timer.id)} className='color-4 color-2-text btn m-3'>Delete</button>
         </div>
       ))}
-      <button onClick={addTimer} className='color-4 color-2-text btn m-3'>Add Timer</button>
+      <button onClick={addTimer} className='color-4 color-2-text btn my-5'>Add Timer</button>
     </div>
   )
 }
