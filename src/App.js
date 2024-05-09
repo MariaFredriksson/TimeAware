@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import MainTimer from './components/MainTimer'
 import Navbar from './components/Navbar'
+import { playAlarm, stopAlarm } from './services/audioService.js'
 import { v4 as uuidv4 } from 'uuid'
 
 function App() {
@@ -37,10 +38,12 @@ function App() {
   const handleTimerComplete = (name) => {
     setFinishedTimerName(name)
     setShowNotification(true)
+    playAlarm()
   }
 
   const stopTimerNotification = () => {
     setShowNotification(false)
+    stopAlarm()
   }
 
   return (
