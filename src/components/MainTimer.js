@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react'
-import alarmSound from '../assets/sounds/alarmSound.mp3'
+// import alarmSound from '../assets/sounds/alarmSound.mp3'
 import CountdownCircle from './CountdownCircle.js'
+import { useAudio } from '../contexts/AudioContext.js'
 
 const MainTimer = ({ name, onTimerComplete  }) => {
   const [seconds, setSeconds] = useState(0)
-
-  // Store total seconds for the full timer
   const [totalSeconds, setTotalSeconds] = useState(0)
-
   const [minutesInput, setMinutesInput] = useState('')
   const [timeInput, setTimeInput] = useState('')
   const [isActive, setIsActive] = useState(false)
-
   const [timerName, setTimerName] = useState(name)
+
+  const { playSound } = useAudio()
+  const alarmSoundUrl = './../assets/sounds/alarmSound.mp3'
 
   useEffect(() => {
     // Create a variable to store the interval ID, which will be used to clear the interval later
@@ -27,7 +27,8 @@ const MainTimer = ({ name, onTimerComplete  }) => {
       // Stop the interval when the timer reaches 0 and also set the isActive state to false
       clearInterval(intervalID) 
       setIsActive(false)
-      playAlarm()
+      // playAlarm()
+      playSound(alarmSoundUrl)
       onTimerComplete()
     }
 
@@ -36,13 +37,13 @@ const MainTimer = ({ name, onTimerComplete  }) => {
     return () => clearInterval(intervalID)
 
     // When the isActive or seconds state changes, the useEffect function will run again
-  }, [isActive, onTimerComplete, seconds])
+  }, [isActive, onTimerComplete, playSound, seconds])
 
   // TODO: Make the alarm loop until the user stops it
-  const playAlarm = () => {
-    const alarm = new Audio(alarmSound)
-    alarm.play()
-  }
+  // const playAlarm = () => {
+  //   const alarm = new Audio(alarmSound)
+  //   alarm.play()
+  // }
 
   // TODO: Maybe do something else instead of the pause button
   const toggle = () => {
