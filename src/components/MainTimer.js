@@ -94,6 +94,11 @@ const MainTimer = ({ name, onTimerComplete  }) => {
     toggle()
   }
 
+  const handleNameFocus = (e) => {
+    // Select all text inside the input when it gains focus
+    e.target.select()
+  }
+
   const handleNameChange = (e) => {
     setTimerName(e.target.value);
   }
@@ -112,7 +117,14 @@ const MainTimer = ({ name, onTimerComplete  }) => {
       <h2 className='color-2-text m-3'>{`${displayMinutes}m : ${displaySeconds.toString().padStart(2, '0')}s`}</h2>
 
       {/* //^^ Can't change name by pressing enter, but is it important? */}
-      <input type="text" value={timerName} onChange={handleNameChange} placeholder="Name of the timer" className='form-control mb-3' />
+      <input 
+        type="text" 
+        value={timerName} 
+        onChange={handleNameChange} 
+        onFocus={handleNameFocus}
+        placeholder="Name of the timer" 
+        className='form-control mb-3' 
+      />
 
       {/* If the user presses Enter, the form will submit and the timer will start */}
       <form onSubmit={handleSubmit} className="container">
