@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import alarmSound from '../assets/sounds/alarmSound.mp3'
 import CountdownCircle from './CountdownCircle.js'
 
-const MainTimer = ({ name }) => {
+const MainTimer = ({ name, onTimerComplete  }) => {
   const [seconds, setSeconds] = useState(0)
 
   // Store total seconds for the full timer
@@ -28,6 +28,7 @@ const MainTimer = ({ name }) => {
       clearInterval(intervalID) 
       setIsActive(false)
       playAlarm()
+      onTimerComplete()
     }
 
     // Clean-up function that first cleans up the previous effect before applying the next effect
@@ -35,7 +36,7 @@ const MainTimer = ({ name }) => {
     return () => clearInterval(intervalID)
 
     // When the isActive or seconds state changes, the useEffect function will run again
-  }, [isActive, seconds])
+  }, [isActive, onTimerComplete, seconds])
 
   // TODO: Make the alarm loop until the user stops it
   const playAlarm = () => {
