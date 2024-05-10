@@ -2,10 +2,19 @@ import { useState, useEffect } from 'react'
 import CountdownCircle from './CountdownCircle.js'
 
 const MainTimer = ({ name, onTimerComplete  }) => {
+  const getNextFullHour = () => {
+    const now = new Date()
+    now.setHours(now.getHours() + 1) // Move to the next hour
+    now.setMinutes(0) // Set minutes to 00
+  
+    const hours = now.getHours().toString().padStart(2, '0') // Ensure two-digit hour
+    return `${hours}:00` // Format the time as "HH:00"
+  }
+
   const [seconds, setSeconds] = useState(0)
   const [totalSeconds, setTotalSeconds] = useState(0)
   const [minutesInput, setMinutesInput] = useState('')
-  const [timeInput, setTimeInput] = useState('')
+  const [timeInput, setTimeInput] = useState(getNextFullHour())
   const [isActive, setIsActive] = useState(false)
   const [timerName, setTimerName] = useState(name)
 
@@ -111,7 +120,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
   return (
     <div className='mt-4'>
       {/* Only show the countdown circle when the timer is active */}
-      {(minutesInput || timeInput) && <CountdownCircle size={200} strokeWidth={10} seconds={seconds} totalSeconds={totalSeconds} />}
+      {(isActive || seconds > 0) && <CountdownCircle size={200} strokeWidth={10} seconds={seconds} totalSeconds={totalSeconds} />}
 
       {/* Display both minutes and seconds */}
       {/* Use padStart to ensure that seconds are always displayed with two digits, prefixing a '0' when necessary */}
