@@ -64,8 +64,9 @@ const MainTimer = ({ name, onTimerComplete  }) => {
       difference += 86400 // Add 24 hours worth of seconds
     }
 
-    setSeconds(difference)
-    setTotalSeconds(difference)
+    // Ensure the seconds and totalSeconds are whole numbers
+    setSeconds(Math.floor(difference))
+    setTotalSeconds(Math.floor(difference))
   }
 
   const reset = () => {
