@@ -130,6 +130,8 @@ const MainTimer = ({ name, onTimerComplete  }) => {
       if (name === 'minutesInput') {
         if (validateMinutes(value) || value === '') {
           setMinutesInput(value)
+          // Reset time input when minutes are changed
+          setTimeInput('')
           if (value === '') {
             setError('')
           }
@@ -137,6 +139,8 @@ const MainTimer = ({ name, onTimerComplete  }) => {
       } else if (name === 'timeInput') {
         if (validateTimeInput(value) || value === '') {
           setTimeInput(value)
+          // Reset minutes input when time is changed
+          setMinutesInput('')
           if (value === '') {
             setError('')
           }
@@ -197,9 +201,9 @@ const MainTimer = ({ name, onTimerComplete  }) => {
               value={minutesInput}
               onChange={handleChange}
               placeholder="Minutes"
-              disabled={isActive}
+              disabled={isActive || timeInput}
               // If the timer is active, hence the input field is disabled, change the color of the input field
-              className={`form-control mb-3 ${isActive ? 'color-4' : ''}`}
+              className={`form-control mb-3 ${(isActive || timeInput) ? 'color-4' : ''}`}
             />
           </div>
 
@@ -211,9 +215,9 @@ const MainTimer = ({ name, onTimerComplete  }) => {
               value={timeInput}
               onChange={handleChange}
               placeholder="HH:MM"
-              disabled={isActive}
+              disabled={isActive || minutesInput}
               // If the timer is active, hence the input field is disabled, change the color of the input field
-              className={`form-control mb-3 ${isActive ? 'color-4' : ''}`} 
+              className={`form-control mb-3 ${(isActive || minutesInput) ? 'color-4' : ''}`} 
             />
           </div>
 
