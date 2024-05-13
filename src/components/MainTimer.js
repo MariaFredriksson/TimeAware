@@ -11,6 +11,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
   const [error, setError] = useState('')
   const [isStarted, setIsStarted] = useState(false)
   const [isMinutesChanged, setIsMinutesChanged] = useState(false)
+  const [isTimeChanged, setIsTimeChanged] = useState(false)
 
   useEffect(() => {
     // Create a variable to store the interval ID, which will be used to clear the interval later
@@ -80,7 +81,11 @@ const MainTimer = ({ name, onTimerComplete  }) => {
     // When the timer is started
     if (!isActive && (minutesInput || timeInput)) {
       if (timeInput && validateTimeInput(timeInput)) {
+        if (isStarted && !isTimeChanged) {
+          setIsActive(true)
+        } else {
         setTimerToSpecificTime()
+        }
       } else if (minutesInput && validateMinutes(minutesInput)) {
         // If the timer has been stared before and is just paused now, and the input hasn't changed, just start it again
         if (isStarted && !isMinutesChanged) {
@@ -94,6 +99,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
     } else if (isActive) {
       setIsActive(false)
       setIsMinutesChanged(false)
+      setIsTimeChanged(false)
     }
   }
 
@@ -154,6 +160,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
       } else if (name === 'timeInput') {
         if (validateTimeInput(value) || value === '') {
           setTimeInput(value)
+          setIsTimeChanged(true)
           // Reset minutes input when time is changed
           setMinutesInput('')
           if (value === '') {
