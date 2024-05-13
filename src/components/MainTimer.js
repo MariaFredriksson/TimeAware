@@ -9,6 +9,8 @@ const MainTimer = ({ name, onTimerComplete  }) => {
   const [isActive, setIsActive] = useState(false)
   const [timerName, setTimerName] = useState(name)
   const [error, setError] = useState('')
+  const [isStarted, setIsStarted] = useState(false)
+  const [isMinutesChanged, setIsMinutesChanged] = useState(false)
 
   useEffect(() => {
     // Create a variable to store the interval ID, which will be used to clear the interval later
@@ -75,14 +77,23 @@ const MainTimer = ({ name, onTimerComplete  }) => {
 
   // TODO: Maybe do something else instead of the pause button
   const toggle = () => {
+    // When the timer is started
     if (!isActive && (minutesInput || timeInput)) {
       if (timeInput && validateTimeInput(timeInput)) {
         setTimerToSpecificTime()
       } else if (minutesInput && validateMinutes(minutesInput)) {
-        setTimerToMinutes()
+        // If the timer has been stared before and is just paused now, and the input hasn't changed, just start it again
+        if (isStarted && !isMinutesChanged) {
+          setIsActive(true)
+        } else {
+          setTimerToMinutes()
+        }
       }
+
+    // When the timer is paused
     } else if (isActive) {
       setIsActive(false)
+      setIsMinutesChanged(false)
     }
   }
 
@@ -103,6 +114,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
     setSeconds(Math.floor(difference))
     setTotalSeconds(Math.floor(difference))
     setIsActive(true)
+    setIsStarted(true)
   }
 
   const setTimerToMinutes = () => {
@@ -112,6 +124,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
     // Set total seconds for calculating the circle progress
     setTotalSeconds(inputSeconds)
     setIsActive(true)
+    setIsStarted(true)
   }
 
   const reset = () => {
@@ -120,6 +133,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
     setMinutesInput('')
     setTimeInput('')
     setIsActive(false)
+    setIsStarted(false)
   }
 
   const handleChange = (e) => {
@@ -130,6 +144,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
       if (name === 'minutesInput') {
         if (validateMinutes(value) || value === '') {
           setMinutesInput(value)
+          setIsMinutesChanged(true)
           // Reset time input when minutes are changed
           setTimeInput('')
           if (value === '') {
@@ -172,7 +187,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
   return (
     <div className='mt-4'>
       {/* Only show the countdown circle when the timer is active */}
-      {(minutesInput || timeInput) && <CountdownCircle size={200} strokeWidth={10} seconds={seconds} totalSeconds={totalSeconds} />}
+      {((minutesInput || timeInput) && isStarted) && <CountdownCircle size={200} strokeWidth={10} seconds={seconds} totalSeconds={totalSeconds} />}
 
       {/* Display both minutes and seconds */}
       {/* Use padStart to ensure that seconds are always displayed with two digits, prefixing a '0' when necessary */}
