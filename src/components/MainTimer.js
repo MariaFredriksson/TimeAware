@@ -33,6 +33,28 @@ const MainTimer = ({ name, onTimerComplete  }) => {
     // When the isActive or seconds state changes, the useEffect function will run again
   }, [isActive, onTimerComplete, seconds])
 
+  const validateTimeInput = (time) => {
+    const parts = time.split(':')
+    if (parts.length === 2) {
+      const hours = parseInt(parts[0], 10)
+      const minutes = parseInt(parts[1], 10)
+  
+      if (!Number.isInteger(hours) || hours < 0 || hours > 23) {
+        setError('Hours must be between 00 and 23.')
+        return false
+      } else if (!Number.isInteger(minutes) || minutes < 0 || minutes > 59) {
+        setError('Minutes must be between 00 and 59.')
+        return false
+      } else {
+        setError('')
+        return true
+      }
+    } else {
+      setError('Time must be in HH:MM format.')
+      return false
+    }
+  }
+
   const validateMinutes = (minutes) => {
     // 10 is the radix, which specifies the base of the number system (decimal)
     const minutesNum = parseInt(minutes, 10)
@@ -54,7 +76,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
   // TODO: Maybe do something else instead of the pause button
   const toggle = () => {
     if (!isActive && (minutesInput || timeInput)) {
-      if (timeInput) {
+      if (timeInput && validateTimeInput(timeInput)) {
         setTimerToSpecificTime()
       } else if (minutesInput && validateMinutes(minutesInput)) {
         setTimerToMinutes()
@@ -80,6 +102,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
     // Ensure the seconds and totalSeconds are whole numbers
     setSeconds(Math.floor(difference))
     setTotalSeconds(Math.floor(difference))
+    setIsActive(true)
   }
 
   const setTimerToMinutes = () => {
@@ -112,7 +135,12 @@ const MainTimer = ({ name, onTimerComplete  }) => {
           }
         }
       } else if (name === 'timeInput') {
-        setTimeInput(value)
+        if (validateTimeInput(value) || value === '') {
+          setTimeInput(value)
+          if (value === '') {
+            setError('')
+          }
+        }
       }
     }
   }
