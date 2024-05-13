@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import CountdownCircle from './CountdownCircle.js'
 
 const MainTimer = ({ name, onTimerComplete  }) => {
@@ -12,6 +12,8 @@ const MainTimer = ({ name, onTimerComplete  }) => {
   const [isStarted, setIsStarted] = useState(false)
   const [isMinutesChanged, setIsMinutesChanged] = useState(false)
   const [isTimeChanged, setIsTimeChanged] = useState(false)
+
+  const timeInputRef = useRef(null)
 
   useEffect(() => {
     // Create a variable to store the interval ID, which will be used to clear the interval later
@@ -140,6 +142,12 @@ const MainTimer = ({ name, onTimerComplete  }) => {
     setTimeInput('')
     setIsActive(false)
     setIsStarted(false)
+
+    // Reset the type of the time input back to text to show the placeholder
+    if (timeInputRef.current) {
+      timeInputRef.current.type = 'text';
+      timeInputRef.current.placeholder = 'HH:MM';
+    }
   }
 
   const handleChange = (e) => {
@@ -187,6 +195,19 @@ const MainTimer = ({ name, onTimerComplete  }) => {
     setTimerName(e.target.value)
   }
 
+  const handleTimeFocus = (e) => {
+    if (e.target.value === '') {
+      e.target.type = 'time'
+    }
+  }
+  
+  const handleTimeBlur = (e) => {
+    if (e.target.value === '') {
+      e.target.type = 'text'
+      e.target.placeholder = 'HH:MM'
+    }
+  }
+
   // Calculate minutes and seconds for display
   const displayMinutes = Math.floor(seconds / 60)
   const displaySeconds = seconds % 60
@@ -232,10 +253,13 @@ const MainTimer = ({ name, onTimerComplete  }) => {
         {/* //^^ Can't add timer by pressing enter, but is that important? */}
           <div className="w-50">
             <input
-              type="time"
+              ref={timeInputRef}
+              type="text" // Default to text type to allow for placeholder text
               name="timeInput"
               value={timeInput}
               onChange={handleChange}
+              onFocus={handleTimeFocus}
+              onBlur={handleTimeBlur}
               placeholder="HH:MM"
               disabled={isActive || minutesInput}
               // If the timer is active, hence the input field is disabled, change the color of the input field
