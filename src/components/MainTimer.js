@@ -198,6 +198,9 @@ const MainTimer = ({ name, onTimerComplete  }) => {
   const handleTimeFocus = (e) => {
     if (e.target.value === '') {
       e.target.type = 'time'
+
+      // Also go to handleChange directly let the user give an input without having to click again
+      handleChange(e)
     }
   }
   
