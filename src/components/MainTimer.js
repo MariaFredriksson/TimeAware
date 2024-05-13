@@ -8,6 +8,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
   const [timeInput, setTimeInput] = useState('')
   const [isActive, setIsActive] = useState(false)
   const [timerName, setTimerName] = useState(name)
+  const [error, setError] = useState('')
 
   useEffect(() => {
     // Create a variable to store the interval ID, which will be used to clear the interval later
@@ -32,20 +33,32 @@ const MainTimer = ({ name, onTimerComplete  }) => {
     // When the isActive or seconds state changes, the useEffect function will run again
   }, [isActive, onTimerComplete, seconds])
 
+  const validateMinutes = (minutes) => {
+    // 10 is the radix, which specifies the base of the number system (decimal)
+    const minutesNum = parseInt(minutes, 10)
+
+    // Check if the input is an integer and is between 1 and 1440 minutes (24 hours)
+    if (!Number.isInteger(minutesNum)) {
+      setError('Please enter a whole number of minutes.')
+      return false
+    }
+    else if (minutesNum < 1 || minutesNum > 1440) {
+      setError('Please enter a value between 1 minute and 1440 minutes (24 hours).')
+      return false
+    } else {
+      setError('')
+      return true
+    }
+  }
+
   // TODO: Maybe do something else instead of the pause button
   const toggle = () => {
     if (!isActive && (minutesInput || timeInput)) {
       if (timeInput) {
         setTimerToSpecificTime()
-      } else {
-        // Convert and set the timer only if it's not already active and there's input
-        const inputSeconds = parseInt(minutesInput, 10) * 60
-        setSeconds(inputSeconds)
-  
-        // Set total seconds for calculating the circle progress
-        setTotalSeconds(inputSeconds)
+      } else if (minutesInput && validateMinutes(minutesInput)) {
+        setTimerToMinutes()
       }
-      setIsActive(true)
     } else if (isActive) {
       setIsActive(false)
     }
@@ -69,6 +82,15 @@ const MainTimer = ({ name, onTimerComplete  }) => {
     setTotalSeconds(Math.floor(difference))
   }
 
+  const setTimerToMinutes = () => {
+    const inputSeconds = parseInt(minutesInput, 10) * 60
+    setSeconds(inputSeconds)
+
+    // Set total seconds for calculating the circle progress
+    setTotalSeconds(inputSeconds)
+    setIsActive(true)
+  }
+
   const reset = () => {
     setSeconds(0)
     setTotalSeconds(0)
@@ -80,10 +102,17 @@ const MainTimer = ({ name, onTimerComplete  }) => {
   const handleChange = (e) => {
     // Allow change only if timer is not active
     if (!isActive) {
-      if (e.target.name === 'minutesInput') {
-        setMinutesInput(e.target.value)
-      } else if (e.target.name === 'timeInput') {
-        setTimeInput(e.target.value)
+      // Destructure the name and value from the event target, which is the input field
+      const { name, value } = e.target
+      if (name === 'minutesInput') {
+        if (validateMinutes(value) || value === '') {
+          setMinutesInput(value)
+          if (value === '') {
+            setError('')
+          }
+        }
+      } else if (name === 'timeInput') {
+        setTimeInput(value)
       }
     }
   }
@@ -101,7 +130,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
   }
 
   const handleNameChange = (e) => {
-    setTimerName(e.target.value);
+    setTimerName(e.target.value)
   }
 
   // Calculate minutes and seconds for display
@@ -126,6 +155,8 @@ const MainTimer = ({ name, onTimerComplete  }) => {
         placeholder="Name of the timer" 
         className='form-control mb-3' 
       />
+
+      {error && <div className='color-3-text m-2'>{error}</div>}
 
       {/* If the user presses Enter, the form will submit and the timer will start */}
       <form onSubmit={handleSubmit} className="container">
