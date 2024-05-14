@@ -220,12 +220,12 @@ const MainTimer = ({ name, onTimerComplete  }) => {
       {/* Use padStart to ensure that seconds are always displayed with two digits, prefixing a '0' when necessary */}
       <h2 className='color-2-text m-3'>{`${displayMinutes}m : ${displaySeconds.toString().padStart(2, '0')}s`}</h2>
 
-      {/* //^^ Can't change name by pressing enter, but is it important? */}
       <input 
         type="text" 
         value={timerName} 
         onChange={handleNameChange} 
         onFocus={handleNameFocus}
+        onKeyUp={(e) => {if (e.key === 'Enter') {e.target.blur()}}}
         placeholder="Name of the timer" 
         className='form-control mb-3' 
       />
@@ -250,7 +250,6 @@ const MainTimer = ({ name, onTimerComplete  }) => {
             />
           </div>
 
-        {/* //^^ Can't add timer by pressing enter, but is that important? */}
           <div className="w-50">
             <input
               ref={timeInputRef}
