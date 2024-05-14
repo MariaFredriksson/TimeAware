@@ -195,7 +195,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
   }
 
   const handleTimeFocus = (e) => {
-    if (e.target.value === '') {
+    if (e.target.value === '' && minutesInput === '') {
       e.target.type = 'time'
     }
   }
@@ -259,8 +259,6 @@ const MainTimer = ({ name, onTimerComplete  }) => {
               onChange={handleChange}
               onFocus={handleTimeFocus}
               onTouchStart={handleTimeFocus}
-              onClick={handleChange}
-              onTouchEnd={handleChange}
               onKeyUp={(e) => {if (e.key === 'Enter') {toggle()}}}
               onBlur={handleTimeBlur}
               placeholder="HH:MM"
