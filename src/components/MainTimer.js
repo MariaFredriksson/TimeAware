@@ -258,6 +258,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
               value={timeInput}
               onChange={handleChange}
               onFocus={handleTimeFocus}
+              onTouchStart={handleTimeFocus}
               onClick={handleChange}
               onTouchEnd={handleChange}
               onBlur={handleTimeBlur}
