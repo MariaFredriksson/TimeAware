@@ -58,3 +58,13 @@ nav {
 .color-4 {
   background-color: #2B7A78 !important;
 }
+
+input {
+  border: 2px solid transparent !important;
+  box-shadow: none !important;
+}
+
+input:focus {
+  border: 2px solid #2B7A78 !important;
+  box-shadow: none !important;
+}
