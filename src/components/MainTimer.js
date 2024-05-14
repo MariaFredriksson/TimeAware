@@ -242,6 +242,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
               name="minutesInput"
               value={minutesInput}
               onChange={handleChange}
+              onKeyUp={(e) => {if (e.key === 'Enter') {toggle()}}}
               placeholder="Minutes"
               disabled={isActive || timeInput}
               // If the timer is active, hence the input field is disabled, change the color of the input field
@@ -261,6 +262,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
               onTouchStart={handleTimeFocus}
               onClick={handleChange}
               onTouchEnd={handleChange}
+              onKeyUp={(e) => {if (e.key === 'Enter') {toggle()}}}
               onBlur={handleTimeBlur}
               placeholder="HH:MM"
               disabled={isActive || minutesInput}
