@@ -78,7 +78,6 @@ const MainTimer = ({ name, onTimerComplete  }) => {
     }
   }
 
-  // TODO: Maybe do something else instead of the pause button
   const toggle = () => {
     // When the timer is started
     if (!isActive && (minutesInput || timeInput)) {
@@ -198,8 +197,6 @@ const MainTimer = ({ name, onTimerComplete  }) => {
   const handleTimeFocus = (e) => {
     if (e.target.value === '') {
       e.target.type = 'time'
-
-      timeInputRef.current.select()
     }
   }
   
@@ -261,6 +258,8 @@ const MainTimer = ({ name, onTimerComplete  }) => {
               value={timeInput}
               onChange={handleChange}
               onFocus={handleTimeFocus}
+              onClick={handleChange}
+              onTouchEnd={handleChange}
               onBlur={handleTimeBlur}
               placeholder="HH:MM"
               disabled={isActive || minutesInput}
