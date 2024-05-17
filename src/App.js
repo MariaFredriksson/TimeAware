@@ -35,6 +35,15 @@ function App() {
     setTimers(timers.filter(timer => timer.id !== id))
   }
 
+  const updateTimerName = (id, newName) => {
+    setTimers(timers.map(timer => {
+      if (timer.id === id) {
+        return { ...timer, name: newName }
+      }
+      return timer
+    }))
+  }
+
   const handleTimerComplete = (name) => {
     setFinishedTimerName(name)
     setShowNotification(true)
@@ -62,7 +71,11 @@ function App() {
 
         {!showNotification && timers.map(timer => (
           <div key={timer.id} className='border rounded-4 p-3 mx-2 mt-4'>
-            <MainTimer name={timer.name} onTimerComplete={() => handleTimerComplete(timer.name)} />
+            <MainTimer 
+              name={timer.name} 
+              onTimerComplete={() => handleTimerComplete(timer.name)}
+              updateName={(newName) => updateTimerName(timer.id, newName)}
+            />
             <button onClick={() => deleteTimer(timer.id)} className='color-4 color-2-text btn m-3'>Delete</button>
           </div>
         ))}

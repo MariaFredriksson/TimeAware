@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import CountdownCircle from './CountdownCircle.js'
 
-const MainTimer = ({ name, onTimerComplete  }) => {
+const MainTimer = ({ name, onTimerComplete, updateName }) => {
   const [seconds, setSeconds] = useState(0)
   const [totalSeconds, setTotalSeconds] = useState(0)
   const [minutesInput, setMinutesInput] = useState('')
@@ -192,6 +192,7 @@ const MainTimer = ({ name, onTimerComplete  }) => {
 
   const handleNameChange = (e) => {
     setTimerName(e.target.value)
+    updateName(e.target.value)
   }
 
   const handleTimeFocus = (e) => {
