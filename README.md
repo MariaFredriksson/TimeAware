@@ -28,21 +28,21 @@ TimeAware is a single-page application (SPA) that dynamically updates based on u
 ### Home View
 Upon launching the app, users are greeted by the Home View where they can immediately interact with the timer functionalities.
 
-[[.readme/TimeAware1.png]]
+![TimeAware1](.readme/TimeAware1.png)
 
 
 ### Timer Active View
 When a timer is set, the view shifts to show the countdown visually with a circle that decreases as time passes. The time can be set to either a specific time or a duration. Users can also pause and resume the timer, or pause and edit the timer. Timers can also be added and deleted, and the name of the timer can be changed.
 
-[[.readme/TimeAware2.png]]
+![TimeAware2](.readme/TimeAware2.png)
 
-[[.readme/TimeAware3.png]]
+![TimeAware3](.readme/TimeAware3.png)
 
 
 ### Timer Completion Notification
 Once a timer completes, the application displays a notification, informing the user that the timer named has finished.
 
-[[.readme/TimeAware4.png]]
+![TimeAware4](.readme/TimeAware4.png)
 
 
 ## Setup
