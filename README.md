@@ -22,6 +22,29 @@ This link leads to the live web application where users can interact with the ap
 ## Documentation
 Detailed documentation about the project is available in the project wiki on GitHub at this link - [https://github.com/upend0/TimeAware/wiki](https://github.com/upend0/TimeAware/wiki). In the wiki, one can find information (in Swedish) about the project and its development process, including sprint backlogs, pitch presentation, requirements specification, test specification, and final thesis.
 
+## Application Views
+TimeAware is a single-page application (SPA) that dynamically updates based on user interactions. Below are the various views of the application as the user engages with it:
+
+### Home View
+Upon launching the app, users are greeted by the Home View where they can immediately interact with the timer functionalities.
+
+[[.readme/TimeAware1.png]]
+
+
+### Timer Active View
+When a timer is set, the view shifts to show the countdown visually with a circle that decreases as time passes. The time can be set to either a specific time or a duration. Users can also pause and resume the timer, or pause and edit the timer. Timers can also be added and deleted, and the name of the timer can be changed.
+
+[[.readme/TimeAware2.png]]
+
+[[.readme/TimeAware3.png]]
+
+
+### Timer Completion Notification
+Once a timer completes, the application displays a notification, informing the user that the timer named has finished.
+
+[[.readme/TimeAware4.png]]
+
+
 ## Setup
 
 To set up the project locally, follow these steps:
