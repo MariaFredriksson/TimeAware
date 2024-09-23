@@ -5,6 +5,10 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.hidden {
+  display: none;
+}
+
 .App {
   text-align: center;
   min-height: 100vh;

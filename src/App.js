@@ -69,18 +69,21 @@ function App() {
           </div>
         )}
 
-        {!showNotification && timers.map(timer => (
-          <div key={timer.id} className='border rounded-4 p-3 mx-2 mt-4'>
-            <MainTimer 
-              name={timer.name} 
-              onTimerComplete={() => handleTimerComplete(timer.name)}
-              updateName={(newName) => updateTimerName(timer.id, newName)}
-            />
-            <button onClick={() => deleteTimer(timer.id)} className='color-4 color-2-text btn m-3'>Delete</button>
-          </div>
-        ))}
+        {/* Hide the timers and the add timer button if the notifications is shown */}
+        <div className={`timers-container ${showNotification ? 'hidden' : ''}`}>
+          {timers.map(timer => (
+            <div key={timer.id} className='border rounded-4 p-3 mx-2 mt-4'>
+              <MainTimer
+                name={timer.name}
+                onTimerComplete={() => handleTimerComplete(timer.name)}
+                updateName={(newName) => updateTimerName(timer.id, newName)}
+              />
+              <button onClick={() => deleteTimer(timer.id)} className='color-4 color-2-text btn m-3'>Delete</button>
+            </div>
+          ))}
+        </div>
 
-        {!showNotification && <button onClick={addTimer} className='color-4 color-2-text btn my-5'>Add Timer</button>}
+        {<button onClick={addTimer} className={`color-4 color-2-text btn my-5 ${showNotification ? 'hidden' : ''}`}>Add Timer</button>}
       </div>
     </div>
   )
