@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import MainTimer from './components/MainTimer'
 import Navbar from './components/Navbar'
+import Notification from './components/Notification'
 import { playAlarm, stopAlarm } from './services/audioService.js'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -61,12 +62,11 @@ function App() {
 
       <div className='app-area'>
 
-        {/* // TODO: Make into a component */}
         {showNotification && (
-          <div className="notification-bar border rounded-4 p-3 mx-2 mt-4">
-            <p className='color-3-text fw-bold mx-4 my-3'>{`Timer "${finishedTimerName}" is done!`}</p>
-            <button onClick={stopTimerNotification} className="color-2 btn my-2">Stop Timer</button>
-          </div>
+          <Notification
+            finishedTimerName={finishedTimerName}
+            onClose={stopTimerNotification}
+          />
         )}
 
         {/* Hide the timers and the add timer button if the notifications is shown */}
