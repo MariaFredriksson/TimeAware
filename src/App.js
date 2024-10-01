@@ -2,14 +2,13 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import MainTimer from './components/MainTimer'
 import Navbar from './components/Navbar'
-import Notification from './components/Notification'
+import NotificationList from './components/NotificationList'
 import { playAlarm, stopAlarm } from './services/audioService.js'
 import { v4 as uuidv4 } from 'uuid'
 
 function App() {
   const [timers, setTimers] = useState([])
-  const [showNotification, setShowNotification] = useState(false)
-  const [finishedTimerName, setFinishedTimerName] = useState('')
+  const [notifications, setNotifications] = useState([])
 
   // Initialize with the first timer when the component mounts, so there is always at least one timer
   useEffect(() => {
@@ -46,14 +45,26 @@ function App() {
   }
 
   const handleTimerComplete = (name) => {
-    setFinishedTimerName(name)
-    setShowNotification(true)
-    playAlarm()
+    // Play the alarm and get the audio instance
+    const alarmAudio = playAlarm() 
+    
+    const newNotification = {
+      id: uuidv4(),
+      name: name,
+      alarmAudio: alarmAudio // Store the audio instance with the notification
+    }
+
+    setNotifications((prevNotifications) => [...prevNotifications, newNotification])
   }
 
-  const stopTimerNotification = () => {
-    setShowNotification(false)
-    stopAlarm()
+  const stopTimerNotification = (id) => {
+    setNotifications((prevNotifications) => {
+      const notificationToRemove = prevNotifications.find((notification) => notification.id === id)
+      if (notificationToRemove && notificationToRemove.alarmAudio) {
+        stopAlarm(notificationToRemove.alarmAudio)
+      }
+      return prevNotifications.filter((notification) => notification.id !== id)
+    })
   }
 
   return (
@@ -62,15 +73,16 @@ function App() {
 
       <div className='app-area'>
 
-        {showNotification && (
-          <Notification
-            finishedTimerName={finishedTimerName}
+        {/* Show the NotificationList if there are any notifications */}
+        {notifications.length > 0 && (
+          <NotificationList
+            notifications={notifications}
             onClose={stopTimerNotification}
           />
         )}
 
-        {/* Hide the timers and the add timer button if the notifications is shown */}
-        <div className={`timers-container ${showNotification ? 'hidden' : ''}`}>
+        {/* Hide the timers and the add timer button if any notifications are shown */}
+        <div className={`timers-container ${notifications.length > 0 ? 'hidden' : ''}`}>
           {timers.map(timer => (
             <div key={timer.id} className='border rounded-4 p-3 mx-2 mt-4'>
               <MainTimer
@@ -83,7 +95,7 @@ function App() {
           ))}
         </div>
 
-        {<button onClick={addTimer} className={`color-4 color-2-text btn my-5 ${showNotification ? 'hidden' : ''}`}>Add Timer</button>}
+        {<button onClick={addTimer} className={`color-4 color-2-text btn my-5 ${notifications.length > 0 ? 'hidden' : ''}`}>Add Timer</button>}
       </div>
     </div>
   )
